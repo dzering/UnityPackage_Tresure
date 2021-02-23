@@ -8,8 +8,8 @@ namespace Assets.Scripts
         [SerializeField] private GameObject buttonMore;
         [SerializeField] private GameObject buttonLess;
         public int Amount;
-
         public Text textAmount;
+
         public void ShowAmount()
         {
             textAmount.text = Amount.ToString();
@@ -23,7 +23,6 @@ namespace Assets.Scripts
 
             Button btnMore = buttonMore.GetComponent<Button>();
             btnMore.onClick.AddListener(() => More());
-
         }
 
         private void More()

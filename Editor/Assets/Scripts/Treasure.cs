@@ -13,6 +13,7 @@ namespace Assets.Scripts
         public double coins = 0;
         private Button save;
         private Button load;
+        private Button reset;
 
         public string SerializeObject<T>(T toSerialize)
         {
@@ -75,29 +76,27 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            // Debug.Log(Application.persistentDataPath);
             save = GameObject.Find("ButtonSave").GetComponent<Button>();
             save.onClick.AddListener(() => Save());
 
             load = GameObject.Find("ButtonLoad").GetComponent<Button>();
             load.onClick.AddListener(() => Load());
 
-            GameObject[] gameObjectCurrencies = GameObject.FindGameObjectsWithTag("Curency");
+            reset = GameObject.Find("ButtonReset").GetComponent<Button>();
+            reset.onClick.AddListener(() => Resets());
 
-            foreach (var gameObjectCurrency in gameObjectCurrencies)
-            {
-
-                var transform = gameObjectCurrency.GetComponent<RectTransform>();
-                var currency = gameObjectCurrency.GetComponent<Currency>();
-                var rect = gameObjectCurrency.GetComponentInChildren<RectTransform>();
-
-            }
 
         }
 
-        void Update()
+        private void Resets()
         {
-
+            GameObject[] gameObjectCurrencies = GameObject.FindGameObjectsWithTag("Curency");
+            foreach (var gameObjectCurrency in gameObjectCurrencies)
+            {
+                var currency = gameObjectCurrency.GetComponent<Currency>();
+                currency.Amount = 0;
+                currency.ShowAmount();
+            }
         }
     }
 
