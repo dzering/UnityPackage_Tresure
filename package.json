@@ -1,0 +1,20 @@
+{
+  "name": "com.Tresure",
+  "version": "1.0.0",
+  "displayName": "Package Tresure",
+  "description": "This is an example package",
+  "unity": "2019.4",
+  "unityRelease": "15f1",
+  "dependencies": {
+ },
+ "keywords": [
+    "tresure",
+    "wallet",
+    "кошелек"
+  ],
+  "author": {
+    "name": "Golubev",
+    "email": "svigolubev@gmail.com",
+    "url": ""
+  }
+}
