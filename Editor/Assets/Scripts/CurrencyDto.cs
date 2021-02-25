@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
+    [System.Serializable]
     public class CurrencyDto
     {
         public string Name

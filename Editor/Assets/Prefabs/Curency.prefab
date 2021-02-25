@@ -170,8 +170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonMore: {fileID: 7341546007378248471}
   buttonLess: {fileID: 5983811109881686530}
-  rate: 1
-  amount: 0
+  Rate: 1
+  Amount: 0
   textAmount: {fileID: 747955814}
 --- !u!1001 &1236242616870144541
 PrefabInstance:

@@ -7,6 +7,7 @@ namespace Assets.Scripts
     {
         [SerializeField] private GameObject buttonMore;
         [SerializeField] private GameObject buttonLess;
+        [SerializeField] private int Rate;
         public int Amount;
         public Text textAmount;
 
@@ -27,7 +28,7 @@ namespace Assets.Scripts
 
         private void More()
         {
-            Amount++;
+            Amount = Amount + Rate;
             ShowAmount();
 
         }
@@ -38,7 +39,7 @@ namespace Assets.Scripts
             {
                 return;
             }
-            Amount--;
+            Amount = Amount -    Rate;
             ShowAmount();
         }
     }
