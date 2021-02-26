@@ -1,8 +1,8 @@
 {
   "name": "com.unity.tresure",
   "version": "1.0.0",
-  "displayName": "Package Tresure",
-  "description": "This is an example package",
+  "displayName": "TestZimadGolubevSergry",
+  "description": "Wallet (tresure) UI modul, that can manage collection of game currencies"
   "unity": "2019.4",
   "unityRelease": "15f1",
   "dependencies": {
@@ -15,6 +15,6 @@
   "author": {
     "name": "Golubev",
     "email": "svigolubev@gmail.com",
-    "url": ""
+    "url": "https://github.com/dzering/UnityPackage_Tresure.git"
   }
 }
