@@ -1,0 +1,19 @@
+{
+    "name": "com.unity.example.",
+    "references": [
+        "GUID:c49f65c55a967f04c95dfb7a62b802da",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:e9745f6a32442194c8dc5a43e9ab86f9"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
