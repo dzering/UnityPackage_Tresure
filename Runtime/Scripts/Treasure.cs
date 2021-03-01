@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -17,26 +17,28 @@ namespace Assets.Scripts
         private Button load;
         private Button loadFromFile;
         private Button reset;
+        private string pathForSaveGame;
 
 
-
-        private void BinarySerializeObject<T>(T _currencies)
+        private void BinarySerializeObject<T>(T _currencies, string path)
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/gamesave.txt");
-            
-            bf.Serialize(file, _currencies);
-            file.Close();
+            using (FileStream file = File.Create(path))
+            {
+                bf.Serialize(file, _currencies);
+            }
         }
 
-        private T BinaryDeserializeObject<T>()
+        private T BinaryDeserializeObject<T>(string path)
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gamesave.txt", FileMode.Open);
-            T result = (T)bf.Deserialize(file);
-            file.Close();
-            return result;
+            using (FileStream file = File.Open(path, FileMode.Open))
+            {
+                T result = (T)bf.Deserialize(file);
+                return result;
+            }
         }
+
 
         public string SerializeObject<T>(T toSerialize)
         {
@@ -60,7 +62,7 @@ namespace Assets.Scripts
             }
         }
 
-        private void Save()
+        private List<CurrencyDto> CreateCollectionCurrencyDto()
         {
             List<CurrencyDto> currencyDtos = new List<CurrencyDto>();
 
@@ -76,6 +78,14 @@ namespace Assets.Scripts
                 currencyDtos.Add(dto);
             }
 
+            return currencyDtos;
+        }
+
+
+
+        private void Save()
+        {
+            var currencyDtos = CreateCollectionCurrencyDto();
             string xml = SerializeObject<List<CurrencyDto>>(currencyDtos);
             PlayerPrefs.SetString("Curencies", xml);
             PlayerPrefs.Save();
@@ -83,57 +93,39 @@ namespace Assets.Scripts
 
         private void SaveInFile()
         {
-            List<CurrencyDto> currencyDtos = new List<CurrencyDto>();
-
-            GameObject[] gameObjectCurrencies = GameObject.FindGameObjectsWithTag("Curency");
-
-            foreach (var gameObjectCurrency in gameObjectCurrencies)
-            {
-                var curency = gameObjectCurrency.GetComponent<Currency>();
-                CurrencyDto dto = new CurrencyDto();
-                dto.Name = curency.name;
-                dto.Amount = curency.Amount;
-
-                currencyDtos.Add(dto);
-            }
-            BinarySerializeObject<List<CurrencyDto>>(currencyDtos);
+            var currencyDtos = CreateCollectionCurrencyDto();
+            BinarySerializeObject<List<CurrencyDto>>(currencyDtos, pathForSaveGame);
         }
 
-        private void Load()
+        private void ShowAmountCurrency(List<CurrencyDto> currencyDtos)
         {
-            List<CurrencyDto> currencyDtos = new List<CurrencyDto>();
-
-           string xml = PlayerPrefs.GetString("Curencies");
-           currencyDtos = DeserializeObject<List<CurrencyDto>>(xml);
-          
-
-
-            foreach (var currencyDto in currencyDtos)
-            {
-               var currency = GameObject.Find(currencyDto.Name).GetComponent<Currency>();
-               currency.Amount = currencyDto.Amount;
-               currency.ShowAmount();
-            }
-        }
-
-        private void LoadFromFile()
-        {
-            List<CurrencyDto> currencyDtos = new List<CurrencyDto>();
-            currencyDtos = BinaryDeserializeObject<List<CurrencyDto>>();
             foreach (var currencyDto in currencyDtos)
             {
                 var currency = GameObject.Find(currencyDto.Name).GetComponent<Currency>();
                 currency.Amount = currencyDto.Amount;
                 currency.ShowAmount();
-            }
-            currencyDtos = BinaryDeserializeObject<List<CurrencyDto>>();
+            } 
+        }
+
+        private void Load()
+        {
+           string xml = PlayerPrefs.GetString("Curencies");
+           List<CurrencyDto> currencyDtos = DeserializeObject<List<CurrencyDto>>(xml);
+           ShowAmountCurrency(currencyDtos);
+
+        }
+
+        private void LoadFromFile()
+        {
+            List<CurrencyDto> currencyDtos = BinaryDeserializeObject<List<CurrencyDto>>(pathForSaveGame);
+            ShowAmountCurrency(currencyDtos);
         }
 
        
-
-
         private void Start()
         {
+            pathForSaveGame = Path.Combine(Application.persistentDataPath, "savegame.txt");
+
             save = GameObject.Find("ButtonSave").GetComponent<Button>();
             save.onClick.AddListener(() => Save());
 
@@ -165,4 +157,3 @@ namespace Assets.Scripts
 
 
 }
-
